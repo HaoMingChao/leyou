@@ -1,0 +1,16 @@
+server:
+  port: 8090
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+spring:
+  application:
+    name: item-service
+  datasource:
+    url: jdbc:mysql://192.168.110.128:3306/leyoutest?serverTimezone=GMT&amp&characterEncoding=utf-8
+    username: root
+    password: admin123
+#mybatis-plus:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

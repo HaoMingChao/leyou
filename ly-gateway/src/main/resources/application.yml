@@ -1,0 +1,29 @@
+server:
+  port: 8100
+spring:
+  application:
+    name: ly-gateway
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+zuul:
+  prefix: /api
+  routes:
+    item-service: /item/**
+    upload-service:
+      path:  /upload/**
+      serviceId: upload-service
+      strip-prefix: false
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+ribbon:
+  ConnectTimeout: 1000
+  ReadTimeout: 3500
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 0
