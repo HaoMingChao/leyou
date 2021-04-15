@@ -1,6 +1,7 @@
 package com.leyou.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -18,7 +19,9 @@ import java.io.Serializable;
 @TableName("tb_stock")
 public class Stock implements Serializable {
 
-    @TableId(type = IdType.AUTO)
+    private static final long serialVersionUID = 1L;
+
+    @TableField(value = "sku_id")
     private Long skuId;
     private Integer seckillStock;
     private Integer seckillTotal;

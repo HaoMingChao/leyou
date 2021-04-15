@@ -53,9 +53,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
     }
 
     public Brand findById(Long id){
-        QueryWrapper<Brand> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("brand_id",id);
-        Brand brand = brandMapper.selectOne(queryWrapper);
+        Brand brand = brandMapper.findById(id);
         if (brand == null){
             throw new LyException(ExceptionEnum.BRAND_NOT_FOUND);
         }

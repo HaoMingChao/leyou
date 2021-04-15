@@ -3,6 +3,7 @@ package com.leyou.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.leyou.pojo.Brand;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 

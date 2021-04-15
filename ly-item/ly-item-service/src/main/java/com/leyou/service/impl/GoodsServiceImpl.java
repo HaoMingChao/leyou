@@ -1,7 +1,12 @@
 package com.leyou.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.TableInfo;
+import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
+import com.baomidou.mybatisplus.core.toolkit.Assert;
+import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.leyou.common.enums.ExceptionEnum;
 import com.leyou.common.exception.LyException;
@@ -9,10 +14,7 @@ import com.leyou.mapper.SkuMapper;
 import com.leyou.mapper.SpuDetailMapper;
 import com.leyou.mapper.SpuVoMapper;
 import com.leyou.mapper.StockMapper;
-import com.leyou.pojo.Category;
-import com.leyou.pojo.Sku;
-import com.leyou.pojo.SpuDetail;
-import com.leyou.pojo.Stock;
+import com.leyou.pojo.*;
 import com.leyou.service.BrandService;
 import com.leyou.service.CategoryService;
 import com.leyou.service.GoodsService;
@@ -24,11 +26,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.sql.Array;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -54,50 +53,80 @@ public class GoodsServiceImpl implements GoodsService{
     @Autowired
     private StockMapper stockMapper;
 
+    @Override
+    public List<SkuVo> findSkuById(Long spuId) {
+        //查询sku
+        List<SkuVo> listSku = skuMapper.findSkuById(spuId);
+        if (CollectionUtils.isEmpty(listSku)){
+            throw new LyException(ExceptionEnum.CATEGORY_SKU_NOT_FOND);
+        }
+//        查询库存
+        List<Long> list = listSku.stream().map(SkuVo::getId).collect(Collectors.toList());
+        List<Stock> stocksList = stockMapper.selectIds(list);
+        if (CollectionUtils.isEmpty(stocksList)){
+            throw new LyException(ExceptionEnum.CATEGORY_SKU_NOT_FOND);
+        }
+        Map<Long, Integer> stockMap = stocksList.stream().collect(Collectors.toMap(Stock::getSkuId, Stock::getStock));
+        listSku.forEach(sku -> sku.setStock(stockMap.get(sku.getId())));
+        return listSku;
+    }
+
+    @Override
+    public SpuDetail findDetailById(Long supId) {
+        SpuDetail spuDetail = spuDetailMapper.selectById(supId);
+        if (spuDetail == null){
+            throw new LyException(ExceptionEnum.GOODS_DETAIL_NOT_FOND);
+        }
+        return spuDetail;
+    }
+
     @Transactional
     @Override
     public void saveGoods(SpuVo spu) {
-//        添加spu
-        System.out.println(spu);
+        //        添加spu
         spu.setId(null);
         spu.setCreateTime(new Date(System.currentTimeMillis()));
         spu.setLastUpdateTime(spu.getCreateTime());
         spu.setSaleable(true);
         spu.setValid(false);
-        int count = spuVoMapper.insert(spu);
-        if (count != 1){
+        int insertSpuCount = spuVoMapper.insert(spu);
+        if (insertSpuCount != 1){
+            throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
+        }
+        QueryWrapper<SpuVo> spuVoQueryWrapper = new QueryWrapper<>();
+        int updateSpuCount = spuVoMapper.update(spu,spuVoQueryWrapper);
+        if (updateSpuCount != 1){
             throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
         }
 
 //        新增detail
         SpuDetail spuDetail = spu.getSpuDetail();
-        System.out.println(spu.getId());
         spuDetail.setSpuId(spu.getId());
-        System.out.println(spuDetail);
         spuDetailMapper.addSpuDetail(spuDetail);
-//        spuDetailMapper.insert(spuDetail);
 
-//        定义一个库存集合
-//        List<Stock> stockList = new ArrayList<>();
-
+//        新增sku
+        List<Stock> stockList = new ArrayList<>();
         List<SkuVo> skus = spu.getSkus();
         for (SkuVo sku : skus) {
             sku.setCreateTime(new Date(System.currentTimeMillis()));
             sku.setLastUpdateTime(sku.getCreateTime());
             sku.setSpuId(spu.getId());
-            count = skuMapper.insert(sku);
-            if (count != 1){
+
+            int skuCount = skuMapper.insert(sku);
+            if (skuCount != 1){
                 throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
             }
-
-//            新增库存
+            //        新增库存
             Stock stock = new Stock();
             stock.setSkuId(sku.getId());
             stock.setStock(sku.getStock());
-//            stockList.add(stock);
-            stockMapper.addStock(stock);
+            stockList.add(stock);
         }
-
+        //批量新增
+        Integer count = stockMapper.insertBatchSomeColumn(stockList);
+        if (count != stockList.size()){
+            throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
+        }
     }
 
     @Override

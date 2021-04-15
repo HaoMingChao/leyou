@@ -8,9 +8,11 @@ spring:
   application:
     name: item-service
   datasource:
-    url: jdbc:mysql://192.168.110.128:3306/leyoutest?serverTimezone=GMT&amp&characterEncoding=utf-8
+#    url: jdbc:mysql://192.168.110.128:3306/leyoutest?serverTimezone=GMT&amp&characterEncoding=utf-8
+    url: jdbc:mysql://192.168.110.100:3306/leyou
     username: root
-    password: admin123
+    password: admin2
 #mybatis-plus:
 #  configuration:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    map-underscore-to-camel-case: true

@@ -10,9 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletInputStream;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -33,13 +30,24 @@ public class SpecificationController {
     @Autowired
     private SpecParamService specParamService;
 
+    /**
+     * 根据分类id查询规格组
+     * @param cid
+     * @return
+     */
     @GetMapping("/groups/{cid}")
     public ResponseEntity<List<SpecGroup>> findGroupByCid(@PathVariable("cid")Long cid){
-        System.out.println(cid);
         return ResponseEntity.ok(specificationService.findGroupByCid(cid));
     }
 
 
+    /**
+     * 查询参数
+     * @param gid 根据gid
+     * @param cid 根据cid
+     * @param searching 根据搜索条件
+     * @return
+     */
     @GetMapping("/params")
     public ResponseEntity<List<SpecParam>> findParamByGid(@RequestParam(value = "gid",required = false)Long gid,@RequestParam(value = "cid",required = false)Long cid,@RequestParam(value = "searching",required = false)Boolean searching){
         return ResponseEntity.ok(specificationService.findParamList(gid,cid,searching));

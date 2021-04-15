@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public enum ExceptionEnum {
     CATEGORY_NOT_FOND(404,"商品分类没有查到"),
+    CATEGORY_SKU_NOT_FOND(404,"商品SKU不存在"),
+    CATEGORY_STOCk_NOT_FOND(404,"商品库存不存在"),
     BRAND_NOT_FOUND(404,"品牌不存在" ),
     BRAND_SAVE_ERROR(500, "新增品牌失败"),
     INVALID_FILE_TYPE(400, "无效的文件类型"),
@@ -17,6 +19,7 @@ public enum ExceptionEnum {
     SPEC_GROUP_NOT_FOND(404,"商品规格组没查到"),
     SPEC_PARAM_NOT_FOND(404,"商品参数没查到"),
     GOODS_NOT_FOND(404,"商品不存在"),
+    GOODS_DETAIL_NOT_FOND(404,"商品详情不存在"),
     GOODS_SAVE_ERROR(500,"新增商品失败")
     ;
     private int code;

@@ -1,6 +1,7 @@
 package com.leyou.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Insert;
 
 import java.util.Collection;
 
