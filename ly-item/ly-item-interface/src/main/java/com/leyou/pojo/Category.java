@@ -26,6 +26,8 @@ public class Category implements Serializable {
 
     @TableField(value = "parent_id")
     private Long parentId;
+
     private Boolean isParent;
+
     private Integer sort;
 }

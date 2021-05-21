@@ -32,4 +32,14 @@ public class CategoryController {
     public ResponseEntity<Brand> uploadFindByBid(@PathVariable(value = "id")Long id){
         return ResponseEntity.ok(brandService.getById(id));
     }
+
+    /**
+     * 根据id查询商品分类
+     * @param ids
+     * @return
+     */
+    @GetMapping("/list/ids")
+    public ResponseEntity<List<Category>> findCategoryByPid(@RequestParam("ids")List<Long> ids){
+        return ResponseEntity.ok(categoryService.findByIds(ids));
+    }
 }

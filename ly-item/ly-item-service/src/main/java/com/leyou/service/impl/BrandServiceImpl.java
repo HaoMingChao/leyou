@@ -28,6 +28,15 @@ public class BrandServiceImpl extends ServiceImpl<BrandMapper, Brand> implements
     private BrandMapper brandMapper;
 
     @Override
+    public List<Brand> findBrandByIds(List<Long> ids) {
+        List<Brand> brand = brandMapper.selectBatchIds(ids);
+        if (brand == null){
+            throw new LyException(ExceptionEnum.BRAND_NOT_FOUND);
+        }
+        return brand;
+    }
+
+    @Override
     public void insertCategoryBrand(Brand brand, List<Long> cids) {
         for (Long cid : cids) {
             brandMapper.insertCategoryBrand(cid,brand.getId());

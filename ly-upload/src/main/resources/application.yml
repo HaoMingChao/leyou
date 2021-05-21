@@ -20,7 +20,7 @@ fdfs:
     height: 60
     width: 60
   tracker-list:
-    - 192.168.110.128:22122
+    - 192.168.110.100:22122
 ly:
   upload:
     baseUrl: http://image.leyou.com/

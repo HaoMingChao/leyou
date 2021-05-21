@@ -31,7 +31,14 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         return list;
     }
 
-    public List<Category> findByIds(List<Long> ids){
+//    public List<Category> findByIds(List<Long> ids){
+//        List<Category> categories = categoryMapper.selectBatchIds(ids);
+//        if (CollectionUtils.isEmpty(categories)){
+//            throw new LyException(ExceptionEnum.CATEGORY_NOT_FOND);
+//        }
+//        return categories;
+//    }
+        public List<Category> findByIds(List<Long> ids){
         List<Category> categories = categoryMapper.selectBatchIds(ids);
         if (CollectionUtils.isEmpty(categories)){
             throw new LyException(ExceptionEnum.CATEGORY_NOT_FOND);

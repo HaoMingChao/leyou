@@ -27,4 +27,7 @@ public interface GoodsService{
 
     List<SkuVo> findSkuById(Long spuId);
 
+    void uploadGoods(SpuVo spu);
+
+    SpuVo findSpuById(Long id);
 }

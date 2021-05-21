@@ -1,0 +1,21 @@
+server:
+  port: 8084
+spring:
+  rabbitmq:
+    host: 192.168.110.100
+#    host: 127.0.0.1
+    username: leyou
+    password: admin2
+    virtual-host: /leyou
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: page-service
+  thymeleaf:
+    cache: false
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+#      defaultZone: http://192.168.110.1:8761/eureka
+

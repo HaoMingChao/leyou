@@ -14,6 +14,8 @@ public enum ExceptionEnum {
     CATEGORY_STOCk_NOT_FOND(404,"商品库存不存在"),
     BRAND_NOT_FOUND(404,"品牌不存在" ),
     BRAND_SAVE_ERROR(500, "新增品牌失败"),
+    GOODS_UPDATE_ERROR(500, "修改商品失败"),
+    GOODS_ID_CANNOT_BE_NULL(500, "商品id不能为空"),
     INVALID_FILE_TYPE(400, "无效的文件类型"),
     UPLOAD_FILE_ERROR(500,"文件上传失败" ),
     SPEC_GROUP_NOT_FOND(404,"商品规格组没查到"),

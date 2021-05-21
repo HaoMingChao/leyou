@@ -21,7 +21,7 @@ public class Stock implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableField(value = "sku_id")
+    @TableId(value = "sku_id",type = IdType.AUTO)
     private Long skuId;
     private Integer seckillStock;
     private Integer seckillTotal;

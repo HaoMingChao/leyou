@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Classname Sku
+ * @Classname
  * @Description TODO
  * @Date 2021/3/10 19:53
  * @Created by MingChao Hao

@@ -1,11 +1,10 @@
 package com.leyou.controller;
 
-import com.leyou.mapper.SpecGroupMapper;
-import com.leyou.pojo.SpecGroup;
 import com.leyou.pojo.SpecParam;
-import com.leyou.service.SpecGroupService;
+import com.leyou.service.SpecGroupVoService;
 import com.leyou.service.SpecParamService;
 import com.leyou.service.SpecificationService;
+import com.leyou.vo.SpecGroupVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +25,19 @@ public class SpecificationController {
     @Autowired
     private SpecificationService specificationService;
     @Autowired
-    private SpecGroupService specGroupService;
+    private SpecGroupVoService SpecGroupVoService;
     @Autowired
     private SpecParamService specParamService;
+
+    /**
+     * 根据分类查询规格组及组内参数
+     * @param cid
+     * @return
+     */
+    @GetMapping("/group")
+    public ResponseEntity<List<SpecGroupVo>> findListGroupByCid(@RequestParam("cid")Long cid){
+        return ResponseEntity.ok(specificationService.findListGroupByCid(cid));
+    }
 
     /**
      * 根据分类id查询规格组
@@ -36,7 +45,7 @@ public class SpecificationController {
      * @return
      */
     @GetMapping("/groups/{cid}")
-    public ResponseEntity<List<SpecGroup>> findGroupByCid(@PathVariable("cid")Long cid){
+    public ResponseEntity<List<SpecGroupVo>> findGroupByCid(@PathVariable("cid")Long cid){
         return ResponseEntity.ok(specificationService.findGroupByCid(cid));
     }
 
@@ -53,21 +62,42 @@ public class SpecificationController {
         return ResponseEntity.ok(specificationService.findParamList(gid,cid,searching));
     }
 
+    /**
+     * 添加组
+     * @param group
+     * @return
+     */
     @RequestMapping("/group")
-    public ResponseEntity<Boolean> addSpecGroup(@RequestBody SpecGroup group){
-        return ResponseEntity.ok(specGroupService.saveOrUpdate(group));
+    public ResponseEntity<Boolean> addSpecGroupVo(@RequestBody SpecGroupVo group){
+        System.out.println("group = " + group.getId());
+        return ResponseEntity.ok(SpecGroupVoService.saveOrUpdate(group));
     }
 
+    /**
+     * 根据id查询组
+     * @param id
+     * @return
+     */
     @DeleteMapping("/group/{id}")
     public ResponseEntity<Boolean> deleteSpeGroupById(@PathVariable(value = "id")Long id){
-        return ResponseEntity.ok(specGroupService.removeById(id));
+        return ResponseEntity.ok(SpecGroupVoService.removeById(id));
     }
 
+    /**
+     * 添加参数
+     * @param specParam
+     * @return
+     */
     @RequestMapping("/param")
     public ResponseEntity<Boolean> addSpecParam(@RequestBody SpecParam specParam){
         return ResponseEntity.ok(specParamService.saveOrUpdate(specParam));
     }
 
+    /**
+     * 根据id删除参数
+     * @param id
+     * @return
+     */
     @DeleteMapping("/param/{id}")
     public ResponseEntity<Boolean> deleteSpecParamById(@PathVariable(value = "id")Long id){
         return ResponseEntity.ok(specParamService.removeById(id));

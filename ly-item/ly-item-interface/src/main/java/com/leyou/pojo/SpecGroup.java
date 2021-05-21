@@ -9,7 +9,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @Classname SpecGroup
+ * @Classname SpecGroupVo
  * @Description TODO
  * @Date 2021/3/4 12:55
  * @Created by MingChao Hao
@@ -17,7 +17,7 @@ import java.io.Serializable;
 
 @Data
 @TableName("tb_spec_group")
-public class SpecGroup  implements Serializable{
+public class SpecGroup implements Serializable{
 
     private static final long serialVersionUID = 1L;
 

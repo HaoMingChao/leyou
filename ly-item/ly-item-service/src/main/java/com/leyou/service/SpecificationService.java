@@ -1,14 +1,16 @@
 package com.leyou.service;
 
-import com.leyou.pojo.SpecGroup;
 import com.leyou.pojo.SpecParam;
+import com.leyou.vo.SpecGroupVo;
 
 import java.util.List;
 
 public interface SpecificationService {
-    List<SpecGroup> findGroupByCid(Long cid);
+    List<SpecGroupVo> findGroupByCid(Long cid);
 
     List<SpecParam> findParamList(Long gid, Long cid, Boolean searching);
 
-    int addSpecGroup(SpecGroup specGroup);
+    int addSpecGroupVo(SpecGroupVo specGroupVo);
+
+    List<SpecGroupVo> findListGroupByCid(Long cid);
 }

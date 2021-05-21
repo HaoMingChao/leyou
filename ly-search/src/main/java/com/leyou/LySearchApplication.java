@@ -3,6 +3,7 @@ package com.leyou;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
@@ -13,7 +14,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Created by MingChao Hao
  */
 
-@SpringBootApplication
+//exclude= {DataSourceAutoConfiguration.class} 跳过查找本服务配置的数据源
+@SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
 @EnableDiscoveryClient
 @EnableFeignClients
 public class LySearchApplication {

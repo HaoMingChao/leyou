@@ -19,4 +19,6 @@ public interface StockMapper extends EasyBaseMapper<Stock>{
             "</script>"
     )
     List<Stock> selectIds(@Param("list") List<Long> list);
+
+    Integer insertBatch(List<Stock> stockList);
 }

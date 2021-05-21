@@ -29,6 +29,16 @@ public class GoodsController {
     private GoodsService goodsService;
 
     /**
+     * 根据spuId查询spu
+     * @param spuId
+     * @return
+     */
+    @GetMapping("/spu/{id}")
+    public ResponseEntity<SpuVo> findSpuById(@PathVariable("id")Long id){
+        return ResponseEntity.ok(goodsService.findSpuById(id));
+    }
+
+    /**
      * 分页查询spu
      * @param current
      * @param size
@@ -46,16 +56,28 @@ public class GoodsController {
      * @param spu
      * @return
      */
-    @PostMapping("/goods")
+    @RequestMapping("/goods")
     public ResponseEntity<Void> saveGoods(@RequestBody SpuVo spu){
-        goodsService.saveGoods(spu);
+        if (spu.getId() == null){
+            goodsService.saveGoods(spu);
+        }else {
+            goodsService.uploadGoods(spu);
+        }
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    /**
+     * 修改商品
+     * @param spu
+     * @return
+     */
 //    @PutMapping("/goods")
 //    public ResponseEntity<Void> uploadGoods(@RequestBody SpuVo spu){
 //        goodsService.uploadGoods(spu);
 //        return ResponseEntity.status(HttpStatus.CREATED).build();
 //    }
+
+
 
     /**
      * 根据spuid查询详情

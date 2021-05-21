@@ -5,14 +5,25 @@ eureka:
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
 spring:
+  rabbitmq:
+    host: 192.168.110.100
+    username: leyou
+    password: admin2
+    virtual-host: /leyou
+    template:
+      retry:
+        enabled: true
+        initial-interval: 10000ms
+        max-interval: 30000ms
+        multiplier: 2
+      exchange: ly.item.exchange
+    publisher-confirm-type: correlated
   application:
     name: item-service
   datasource:
-#    url: jdbc:mysql://192.168.110.128:3306/leyoutest?serverTimezone=GMT&amp&characterEncoding=utf-8
     url: jdbc:mysql://192.168.110.100:3306/leyou
     username: root
     password: admin2
-#mybatis-plus:
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-#    map-underscore-to-camel-case: true
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

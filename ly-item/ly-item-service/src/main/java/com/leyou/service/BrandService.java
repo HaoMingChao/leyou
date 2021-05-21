@@ -20,4 +20,6 @@ public interface BrandService extends IService<Brand> {
     List<Brand> findBrandByCid(Long cid);
 
     void insertCategoryBrand(Brand brand, List<Long> cids);
+
+    List<Brand> findBrandByIds(List<Long> ids);
 }

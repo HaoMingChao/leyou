@@ -1,8 +1,17 @@
 server:
   port: 8083
 spring:
+  rabbitmq:
+    host: 192.168.110.100
+    username: leyou
+    password: admin2
+    virtual-host: /leyou
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: search-service
+  jackson:
+    default-property-inclusion: non_null
 eureka:
   client:
     service-url:

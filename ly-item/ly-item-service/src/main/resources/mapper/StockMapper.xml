@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leyou.mapper.StockMapper">
+
+    <resultMap id="BaseResultMap" type="com.leyou.pojo.Stock">
+        <!--@Table -->
+        <result property="skuId" column="sku_id" jdbcType="OTHER"/>
+        <result property="seckillStock" column="seckill_stock" jdbcType="OTHER"/>
+        <result property="seckillTotal" column="seckill_total" jdbcType="OTHER"/>
+        <result property="stock" column="stock" jdbcType="OTHER"/>
+    </resultMap>
+
+    <insert id="insertBatch" parameterType="List">INSERT INTO tb_stock (sku_id,seckill_stock,seckill_total,stock) VALUES<foreach collection="list" item="item" separator=",">(#{item.skuId},#{item.seckillStock},#{item.seckillTotal},#{item.stock})</foreach></insert>
+
+</mapper>
+
